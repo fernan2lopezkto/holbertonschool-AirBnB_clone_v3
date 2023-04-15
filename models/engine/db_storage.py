@@ -81,8 +81,8 @@ class DBStorage:
         (cls: class, id: string representing the object ID)
         Returns the object based on the class and its ID, or None if not found
         """
-        objs = self.all(cls)
-        for obj in objs:
+        objs = self.all(cls) # this return a dictionary
+        for ky, obj in objs:
             if obj.id == id:
                 return obj
         return None
