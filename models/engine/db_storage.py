@@ -81,10 +81,8 @@ class DBStorage:
         (cls: class, id: string representing the object ID)
         Returns the object based on the class and its ID, or None if not found
         """
-        objs = self.all(cls) # this return a dictionary
-        for ky, obj in objs:
-            if obj.id == id:
-                return obj
+        if cls in classes.values() and id is not None:
+            return self.__session.query(cls).filter_by(id=id).first()
         return None
 
     def count(self, cls=None):
