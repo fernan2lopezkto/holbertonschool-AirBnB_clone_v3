@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Start a flask web app"""
 
+"""
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
@@ -16,7 +17,6 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def handle_context():
-    """doc"""
     storage.close()
 
 if __name__ == "__main__":
@@ -24,3 +24,5 @@ if __name__ == "__main__":
         app.run(host= HBNB_API_HOST, port= HBNB_API_PORT, threaded=True)
     except:
         app.run(host= '0.0.0.0', port= '5000', threaded= True)
+
+        """
