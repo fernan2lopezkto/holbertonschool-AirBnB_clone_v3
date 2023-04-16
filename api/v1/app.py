@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" documentation """
+""" Start a flask web app """
 
 from flask import Flask
 from models import storage

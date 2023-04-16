@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" documentation """
+""" module to create app views for blueprint"""
 
 from flask import Blueprint
 from api.v1.views.index import *
