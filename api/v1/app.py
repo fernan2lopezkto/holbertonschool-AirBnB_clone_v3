@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
 Start a flask web app
+regitring blueprint
+use env to set host and port
 """
 
 from flask import Flask
