@@ -123,3 +123,12 @@ class TestFileStorage(unittest.TestCase):
         models.storage.save()
         test = models.storage.get(Amenity, amen.id)
         self.assertEqual(amen, test)
+
+    def test_count(self):
+        """test on count method"""
+        count_1 = models.storage.count(Amenity)
+        amen = Amenity(name="example")
+        models.storage.new(amen)
+        models.storage.sabe()
+        count_2 = models.storage.count(Amenity)
+        self.assertNotEqual(count_1, count_2)
