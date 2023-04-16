@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Start a flask web app """
+"""Start a flask web app"""
 
 from flask import Flask
 from models import storage
@@ -16,6 +16,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def handle_context():
+    """doc"""
     storage.close()
 
 if __name__ == "__main__":
