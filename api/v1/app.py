@@ -1,7 +1,8 @@
 #!/usr/bin/python3
-"""Start a flask web app"""
-
 """
+Start a flask web app
+"""
+
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
@@ -25,4 +26,3 @@ if __name__ == "__main__":
     except:
         app.run(host= '0.0.0.0', port= '5000', threaded= True)
 
-        """
