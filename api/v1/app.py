@@ -23,14 +23,9 @@ def handle_context():
     """
     This function closes a storage context.
     """
+
     storage.close()
 
-
-# This code block is checking if the current module is being run as the main program (as opposed to
-# being imported as a module into another program). If it is being run as the main program, it tries
-# to run the Flask application with the specified host and port, and with threading enabled. If an
-# exception occurs (such as if the specified host and port are not available), it runs the Flask
-# application with a default host and port.
 if __name__ == "__main__":
     try:
         app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
