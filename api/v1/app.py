@@ -5,7 +5,7 @@ when the application context is torn down.
 """
 
 # from os import getenv
-# from flask import Flask
+from flask import Flask
 # from api.v1 import 
 # from models import storage
 
@@ -14,7 +14,7 @@ when the application context is torn down.
 # HBNB_API_PORT = getenv('HBNB_API_PORT')
 
 
-# app = Flask(__name__)
+app = Flask(__name__)
 # app.register_blueprint(views)
 
 
