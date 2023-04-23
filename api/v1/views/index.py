@@ -22,9 +22,8 @@ def index():
 @app_views.route('/stats')
 def stats():
     """
-    The function returns a JSON object containing the count of various objects in a storage system.
-    :return: The function `stats()` returns a JSON object containing the count of objects for each of
-    the six classes: `Amenity`, `City`, `Place`, `Review`, `State`, and `User`.
+    The function returns a JSON object containing
+    the count of various objects in a storage system.
     """
     objects = {
         "amenities": storage.count(Amenity),
