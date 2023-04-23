@@ -7,7 +7,8 @@ when the application context is torn down.
 # from os import getenv
 from flask import Flask
 # from api.v1 import 
-# from models import storage
+from models import storage
+from api.v1.views import app_views
 
 
 # HBNB_API_HOST = getenv('HBNB_API_HOST')
@@ -15,16 +16,16 @@ from flask import Flask
 
 
 app = Flask(__name__)
-# app.register_blueprint(views)
+app.register_blueprint(app_views)
 
 
-# @app.teardown_appcontext
-# def handle_context():
-#     """
-#     This function closes a storage context.
-#     """
+@app.teardown_appcontext
+def handle_context():
+    """
+    This function closes a storage context.
+    """
 
-#     storage.close()
+    storage.close()
 
 # if __name__ == "__main__":
 #     try:
