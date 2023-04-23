@@ -4,18 +4,18 @@ This is a Flask application that runs an API with a blueprint for views and clos
 when the application context is torn down.
 """
 
-# from os import getenv
-from flask import Flask
-# from api.v1 import 
+# imports
+from flask import Flask,
 from models import storage
-from api.v1.views import app_views
+from os import getenv
 
 
-# HBNB_API_HOST = getenv('HBNB_API_HOST')
-# HBNB_API_PORT = getenv('HBNB_API_PORT')
+# from api.v1 import 
 
-
+"""instancies my app"""
 app = Flask(__name__)
+
+"""register blueprint template in my appi"""
 app.register_blueprint(app_views)
 
 
@@ -24,8 +24,8 @@ def handle_cont(exeption):
     """This function closes a storage context."""
     storage.close()
 
-# if __name__ == "__main__":
-#     try:
-#         app.run(host=HBNB_API_HOST, port=HBNB_API_PORT, threaded=True)
-#     except:
-#         app.run(host='0.0.0.0', port='5000', threaded=True)
+if __name__ == '__main__':
+    """run my app"""
+    host = getenv('HBNB_API_HOST', '0.0.0.0')
+    port = int(getenv('HBNB_API_PORT', 5000))
+    app.run(host=host, port=port, threaded=True)
