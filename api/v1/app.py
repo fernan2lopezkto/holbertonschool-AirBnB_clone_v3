@@ -5,13 +5,10 @@ when the application context is torn down.
 """
 
 # imports
-from flask import Flask,
+from flask import Flask
 from models import storage
 from os import getenv
-
-
-# from api.v1 import 
-
+from api.v1.views import app_views
 """instancies my app"""
 app = Flask(__name__)
 
