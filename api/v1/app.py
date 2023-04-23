@@ -1,14 +1,16 @@
 #!/usr/bin/python3
 """
-This is a Flask application that runs an API with a blueprint for views and closes a storage context
+This is a Flask application that runs an API
+with a blueprint for views and closes a storage context
 when the application context is torn down.
 """
 
 # imports
-from flask import Flask
-from models import storage
 from os import getenv
+from models import storage
+from flask import Flask
 from api.v1.views import app_views
+
 """instancies my app"""
 app = Flask(__name__)
 
