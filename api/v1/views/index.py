@@ -8,11 +8,3 @@ from flask import jsonify
 def index():
     """returned a object with json representation"""
     return jsonify({"status": "OK"})
-
-# from flask import jsonify
-
-# @app_views.route('/status')
-# def ret_status():
-#     """Ret status"""
-#     status = {"status": "OK"}
-#     return jsonify(status)
