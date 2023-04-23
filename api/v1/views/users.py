@@ -1,68 +1,67 @@
 #!/usr/bin/python3
-"""
-Module users
-"""
+"""http methods for manipulating sate class resources"""
 from api.v1.views import app_views
-from flask import abort, request, jsonify
-from models import storage
 from models.user import User
+from models import storage
+from flask import jsonify, make_response, request
 
 
-@app_views.route('/users', strict_slashes=False, methods=['GET'])
+@app_views.route('/users', methods=['GET'], strict_slashes=False)
+@app_views.route('/users/', methods=['GET'], strict_slashes=False)
 def get_users():
-    """ retrieves all users """
-    users = []
-    for user in storage.all('User').values():
-        users.append(user.to_dict())
-    return jsonify(users)
+    """Return a list of all users"""
+    users = storage.all(User).values()
+    users_list = [user.to_dict() for user in users]
+    return jsonify(users_list)
 
 
-@app_views.route(
-    '/users/<user_id>', strict_slashes=False, methods=['GET', 'DELETE'])
+@app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def get_user_by_id(user_id):
-    """ retrieves user by id """
+    """Return a user by ID"""
     user = storage.get(User, user_id)
     if user is None:
-        abort(404)
-    elif request.method == 'GET':
-        return jsonify(user.to_dict())
-    elif request.method == 'DELETE':
-        storage.delete(user)
-        storage.save()
-        return jsonify({}), 200
+        return make_response(jsonify({'error': 'Not found'}), 404)
+    return jsonify(user.to_dict())
 
 
-@app_views.route('/users', strict_slashes=False, methods=['POST'])
-def post_user():
-    """ posts a user """
-    req = request.get_json(silent=True)
-    if req is None:
-        abort(400, 'Not a JSON')
-    elif 'email' not in req.keys():
-        abort(400, 'Missimg email')
-    elif 'password' not in req.keys():
-        abort(400, 'Missimg password')
-    else:
-        new_user = User(**req)
-        storage.new(new_user)
-        storage.save()
-        return jsonify(new_user.to_dict()), 201
-
-
-@app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
-def put_user(user_id):
-    """ updates user """
+@app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
+def delete_user(user_id):
+    """Delete a user by ID"""
     user = storage.get(User, user_id)
     if user is None:
-        abort(404)
-    req = request.get_json(silent=True)
-    if req is None:
-        abort(400, 'Not a JSON')
-    for key, val in req.items():
-        if key == 'id' or key == 'email' or \
-                key == 'created_at' or key == 'updated_at':
-            pass
-        else:
-            setattr(user, key, val)
+        return make_response(jsonify({'error': 'not found'}), 404)
+    storage.delete(user)
     storage.save()
-    return jsonify(user.to_dict()), 200
+    return make_response(jsonify({}), 200)
+
+
+@app_views.route('/users', methods=['POST'], strict_slashes=False)
+def create_user():
+    """Create a new user"""
+    request_data = request.get_json()
+    if not request_data:
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if 'email' not in request_data:
+        return make_response(jsonify({'error': 'Missing email'}), 400)
+    if 'password' not in request_data:
+        return make_response(jsonify({'error': 'Missing password'}), 400)
+    new_user = User(**request_data)
+    storage.new(new_user)
+    storage.save()
+    return make_response(jsonify(new_user.to_dict()), 201)
+
+
+@app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
+def update_user(user_id):
+    """update user"""
+    user = storage.get(User, user_id)
+    if user is None:
+        return make_response(jsonify({'error': 'not found'}), 404)
+    request_data = request.get_json()
+    if not request_data:
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    for key, value in request_data.items():
+        if key not in ['id', 'created_at', 'updated_at']:
+            setattr(user, key, value)
+    storage.save()
+    return make_response(jsonify(user.to_dict()), 200)
