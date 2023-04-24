@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-"""http methods for manipulating sate class resources"""
+"""
+http methods for manipulating sate class resources
+"""
 
 from api.v1.views import app_views
-
 from models.state import State
 from models import storage
-
 from flask import jsonify, make_response, request
 
 
